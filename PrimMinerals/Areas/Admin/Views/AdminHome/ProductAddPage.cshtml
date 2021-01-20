@@ -1,0 +1,61 @@
+﻿@model ErrorsModel
+@{
+    ViewData["Title"] = "Добавление товара";
+}
+
+<h1>Добавление товара</h1>
+@if (Model.Errors.ContainsKey("Added"))
+{
+    <h3 class="text-success">Товар успешно добавлен</h3>
+}
+<form class="form-group" action="/Admin/AdminHome/AddProduct" method="post" enctype="multipart/form-data">
+
+    <label class="form-text">Название</label>
+    <input type="text" name="Tittle" class="form-control" />
+    @if (Model.Errors.ContainsKey("Tittle"))
+    {
+        <small class="form-text text-danger">@Model.Errors["Tittle"]</small>
+    }
+
+    <label class="form-text">Категория</label>
+    <input type="text" name="Category" class="form-control" />
+    @if (Model.Errors.ContainsKey("Category"))
+    {
+        <small class="form-text text-danger">@Model.Errors["Category"]</small>
+    }
+
+    <label class="form-text">Кол-во</label>
+    <input type="text" name="Count" class="form-control" />
+    @if (Model.Errors.ContainsKey("Count"))
+    {
+        <small class="form-text text-danger">@Model.Errors["Count"]</small>
+    }
+
+    <label class="form-text">Описание</label>
+    <textarea id="exampleTextarea" rows="10" name="Description" class="form-control"></textarea>
+
+    <label class="form-text">Размер</label>
+    <input type="text" name="Size" class="form-control" />
+
+    <label class="form-text">Вес</label>
+    <input type="text" name="Waight" class="form-control" />
+    @if (Model.Errors.ContainsKey("Waight"))
+    {
+        <small class="form-text text-danger">@Model.Errors["Waight"]</small>
+    }
+
+    <label class="form-text">Цена</label>
+    <input type="text" name="Price" class="form-control" />
+    @if (Model.Errors.ContainsKey("Price"))
+    {
+        <small class="form-text text-danger">@Model.Errors["Price"]</small>
+    }
+
+    <label class="form-text">На главную</label>
+    <input type="checkbox" name="IsFavourite" class="form-control" />
+
+    <label class="form-text">Изображения</label>
+    <input class="form-control-file" type="file" name="files" multiple />
+
+    <button class="btn btn-outline-success">Добавить</button>
+</form>

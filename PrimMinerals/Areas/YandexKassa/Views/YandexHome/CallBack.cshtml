@@ -1,0 +1,9 @@
+﻿@using PrimMinerals.Areas.YandexKassa.Models;
+@model YandexModel
+@{
+    ViewData["Tittle"] = "Яндекс касса";
+}
+<h1>Заказ опалачен</h1>
+<p>
+    <a href="@Url.Action("Finish","Order",new { orderId = Model.OrderId})">Вернуться в магазин</a>
+</p>

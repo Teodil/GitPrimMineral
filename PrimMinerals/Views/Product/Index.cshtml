@@ -1,0 +1,66 @@
+﻿@model Product
+@{
+    ViewData["Title"] = Model.Tittle;
+}
+
+<h1>@Model.Tittle</h1>
+
+
+<div class="row">
+    <div class="col w-75">
+        <div class="block-for-slider">
+            <div id="viewport">
+                <ul id="slidewrapper">
+                    @for (int i = 0; i < Model.Images.Count; i++)
+                    {
+                        <li class="slide"><img src="@Model.Images[i]" alt="@(i+1)" class="slide-img"></li>
+                    }
+                </ul>
+
+                <div id="prev-next-btns">
+                    <div id="prev-btn" class="bg-dark"></div>
+                    <div id="next-btn" class="bg-dark"></div>
+                </div>
+
+                <ul id="nav-btns">
+                    @foreach (var image in Model.Images)
+                    {
+                        <li class="slide-nav-btn bg-dark"></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col w-25">
+        <div class="row w-100 mb-2 mt-3">
+            <h3><strong>@Model.Price&#8381;/шт</strong></h3>
+        </div>
+        <form action="@Url.Action(nameof(OrderController.AddItem),"Order")" method="post">
+            <div class="row w-100 mb-2 h-auto">
+                <div class="col mr-1 ">
+                    <div class="count_box">
+                        <div class="minus text-center">-</div>
+                        <input class="inp_price text-center" type="text" value="1" name="count">
+                        <div class="plus text-center">+</div>
+                    </div>
+                </div>
+                <div class="col w-50">
+                    <input type="hidden" name="productId" value="@Model.Id" />
+                    <input type="hidden" name="redirectPage" value="/Product/Index?productId=@Model.Id" />
+                    <button class="btn btn-success" action="@Url.Action(nameof(OrderController.AddItem),"Order")" type="submit">
+                        В корзину
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="row w-100">
+            <h4 class="row text-left w-100 ml-2">Описание</h4>
+            <div class="row text-left ml-2">
+                @Model.Description
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/ImgaeScroller.js" ></script>
+<script src="~/js/AmounCounter.js"></script>

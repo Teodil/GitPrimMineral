@@ -1,0 +1,57 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Редактор товара";
+}
+
+<h1>Редактор товара</h1>
+
+<form class="form-group" action="/Admin/AdminHome/UpdateProduct" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <label class="form-text">Название</label>
+    <input type="text" name="Tittle" class="form-control" value="@Model.Tittle" />
+
+    <label class="form-text">Категория</label>
+    <input type="text" name="Category" class="form-control" value="@Model.Category" />
+
+    <label class="form-text">Кол-во</label>
+    <input type="text" name="Count" class="form-control" value="@Model.Count" />
+
+    <label class="form-text">Описание</label>
+    <textarea id="exampleTextarea" rows="10" name="Description" class="form-control">@Model.Description</textarea>
+
+    <label class="form-text">Размер</label>
+    <input type="text" name="Size" class="form-control" value="@Model.Size" />
+
+    <label class="form-text">Вес</label>
+    <input type="text" name="Waight" class="form-control" value="@Model.Waight" />
+
+    <label class="form-text">Цена</label>
+    <input type="text" name="Price" class="form-control" value="@Model.Price" />
+
+    <label class="form-text">На главную</label>
+    <input type="checkbox" name="IsFavourite" class="form-control" />
+
+    <button class="btn btn-outline-success">Обновить</button>
+</form>
+
+<label class="form-text">Изображения</label>
+<form action="/Admin/AdminHome/Upload" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="productId" value="@Model.Id" /><br>
+    <input type="file" name="files" multiple />
+    <button class="btn btn-success" type="submit">Загрузить</button>
+</form>
+<label class="form-text">Изображения товара</label>
+@foreach (var image in Model.Images)
+{
+    <div class="col">
+        <img class="row" src="@image" width="100" height="100" />
+        <div class="row">
+            <form class="form-group" action="/Admin/AdminHome/DeleteImage" method="post">
+                <input type="hidden" name="productId" value="@Model.Id" />
+                <input type="hidden" name="path" value="@image" />
+                <button class="btn btn-outline-danger" type="submit">Удалить</button>
+            </form>
+        </div>
+    </div>
+}

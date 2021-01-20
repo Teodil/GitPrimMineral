@@ -1,0 +1,10 @@
+﻿@using PrimMinerals.Areas.YandexKassa.Models;
+@model YandexModel
+@{
+    ViewData["Tittle"] = "Яндекс Касса";
+}
+<h1>Яндекс касса</h1>
+<div class="form-group">
+    <label class="form-text">К оплате @Model.Price</label>
+    <a class="btn btn-success text-decoration-none" href="/YandexKassa/YandexHome/CallBack">Оплатить</a>
+</div>

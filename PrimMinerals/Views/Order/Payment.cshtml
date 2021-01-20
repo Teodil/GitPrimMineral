@@ -1,0 +1,87 @@
+﻿@model PaymentModel
+@{
+    ViewData["Title"] = "Оплата";
+}
+
+<h1>Корзина</h1>
+
+<table class="table table-sm table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col"></th>
+            <th scope="col">Название</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Цена</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Order.Items.Count; i++)
+        {
+            <tr>
+                <td class="text-center align-middle">@(i + 1)</td>
+                <td><img src="@Model.Order.Items[i].Image" width="100" height="100" /></td>
+                <td class="align-middle"><a class="text-decoration-none text-body" href="@Url.Action("Index","Product",new {productId = Model.Order.Items[i].ProductId })"> @Model.Order.Items[i].Tittle</a></td>
+                <td class="text-center align-middle">
+                    <div class="row w-100 mb-2 h-auto">
+                        <div class="col mr-1 ">
+                            <input class="inp_price text-center" type="text" readonly value="@Model.Order.Items[i].Count" name="count">
+                        </div>
+                    </div>
+                    <!--int productId, string redirectPage, int count-->
+                </td>
+
+
+
+                <td class="text-center align-middle">@Model.Order.Items[i].Price&#8381;</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Итого</td>
+            <td class="text-center">@Model.Order.TotalCount</td>
+            <td class="text-center">@Model.Order.TotalPrice&#8381; + Доставка: @Model.Order.Delivery.Price&#8381;</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-right">Общая цена</td>
+            <td class="text-center">@(Model.Order.TotalPrice+Model.Order.Delivery.Price)&#8381;</td>
+        </tr>
+    </tfoot>
+</table>
+
+<form>
+    <div class="form-group">
+        <select id="select" name="select" class="form-control">
+            @foreach (var paymnet in Model.Paymenets)
+            {
+                <option value="@paymnet.Id">@paymnet.Tittle</option>
+            }
+        </select>
+    </div>
+</form>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+
+    //Событие вызывается при изменении значения select
+    $('select[name="select"]').on('change', function () {
+
+
+        var selected = $("#select option:selected").val();
+
+
+        var code1 = "<input type=\"hidden\" name=\"PaymentId\" value=" + selected + " />" +
+            "<button class=\"btn btn-outline-success\"  type=\"submit\">Далее</button>";
+
+
+            $(function () {
+                $("#result").html(code1);
+            });
+    });
+</script>
+<form id="result" class="form-group" action="@Url.Action(nameof(OrderController.SetPayment),"Order")" method="post">
+
+</form>
+

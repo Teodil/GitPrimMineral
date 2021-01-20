@@ -1,0 +1,22 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "Оформление заказа";
+}
+
+<h1>Оформление заказа</h1>
+<p>Для подтверждения заказа ввдетие свою электроную почту и номер телефона</p>
+<form action="@Url.Action(nameof(OrderController.SendConfirmation),"Order")" method="post">
+    <label for="email">Почта</label>
+    <input class="form-control" name="email" type="text" placeholder="example@mail.ru" />
+    @if (Model.Errors.ContainsKey("email"))
+    {
+        <small class="form-text text-danger">@Model.Errors["email"]</small>
+    }
+    <label for="cellPhone">Телефон</label>
+    <input class="form-control" name="cellPhone" type="text" placeholder="+79998887654" />
+    @if (Model.Errors.ContainsKey("cellPhone"))
+    {
+        <small class="form-text text-danger">@Model.Errors["cellPhone"]</small>
+    }
+    <button class="btn btn-outline-success">Далее</button>
+</form>

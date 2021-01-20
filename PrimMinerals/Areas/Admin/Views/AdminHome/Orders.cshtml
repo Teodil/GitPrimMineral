@@ -1,0 +1,98 @@
+﻿@model Order[]
+@{
+    ViewData["Title"] = "Заказы";
+}
+
+<h1>Заказы</h1>
+<table class="table table-sm table-dark table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">№ Заказа</th>
+            <th scope="col">Товары</th>
+            <th scope="col">Контактная информация</th>
+            <th scope="col">Информация по доставке</th>
+            <th scope="col">Информация по оплате</th>
+            <th scope="col">Статус</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+        <tr>
+            <td class="text-center align-middle">@order.Id</td>
+            <td>
+                @foreach (var item in order.Items)
+                {
+                    <div class="row ml-2 border-bottom border-dark">
+                        <a class="text-decoration-none w-100 text-light" href="/Product/Index?productId=@item.ProductId"><h4>@item.Tittle</h4></a>
+                        <p class="w-100">В кол-ве: @(item.Count)шт по цене @item.Price</p>
+                        <p class="w-100">Сумма: @(item.Price*item.Count)</p>
+                    </div>
+                }
+                <div class="row ml-2 border-bottom border-dark">
+                    <h6>Общая стоимость: @order.TotalPrice</h6>
+                </div>
+            </td>
+
+            <td class="align-middle">
+                <p>Email: @order.Email</p>
+                <p>Телефон: @order.CellPhone</p>
+            </td>
+
+            <td class="align-middle">
+                @if(order.Delivery != null)
+                {
+                    if (order.Delivery.Id == 1)
+                    {
+                        <p class="text-center align-middle">Самовывоз</p>
+                    }
+                    else
+                    {
+                        <p class="align-middle">Адрес доставки: @("Город "+order.Delivery.CityTo+" ул "+order.Delivery.StreetTo+" "+order.Delivery.HouseTo+" кв "+order.Delivery.FlatTo)</p>
+                    }
+                }
+                else
+                {
+                    <p class="text-center align-middle">Нет информации</p>
+                }
+            </td>
+
+            <td class="align-middle">
+                @if(order.Payment != null)
+                {
+                    <p class="text-center align-middle">@order.Payment.Tittle</p>
+                }
+                else
+                {
+                    <p class="text-center align-middle">Не оплачен</p>
+                }
+            </td>
+
+            <td class="align-middle">
+                @if (order.IsFinished)
+                {
+                    <p class="text-success text-center align-middle">Заказ завершён</p>
+                }
+                else
+                {
+                    <p class="text-danger text-center align-middle">Не завершён</p>
+                }
+            </td>
+            <td class="align-middle text-center">
+                <div class="container">
+                    <form class="row mb-2" action="/Admin/AdminHome/OrderEdit" method="post">
+                        <input type="hidden" name="orderId" value="@order.Id" />
+                        <button class="btn btn-info w-100">Подробнее</button>
+                    </form>
+                    <form class="row" action="/Admin/AdminHome/DeleteOrder" method="post">
+                        <input type="hidden" name="orderId" value="@order.Id" />
+                        <input type="hidden" name="redirectUrl" value="/Admin/AdminHome/Orders" />
+                        <button class="btn btn-danger w-100">Удалить</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

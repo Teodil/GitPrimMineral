@@ -1,0 +1,35 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "Оформление заказа";
+}
+
+<h1>Оформление заказа</h1>
+<p>Введите код отправленный на вашу электрунную почту</p>
+<form class="form-group" action="@Url.Action(nameof(OrderController.ConfirmEmail),"Order")" method="post">
+    <label for="confirmationCode">Код подтверждения</label>
+    <input type="text" name="confirmationCode" class="form-control" placeholder="0000" />
+    <input type="hidden" name="email" value="@Model.Email" />
+    <input type="hidden" name="cellPhone" value="@Model.CellPhone" />
+    @if (Model.Errors.ContainsKey("confirmationCode"))
+    {
+        <small class="form-text text-danger">@Model.Errors["confirmationCode"]</small>
+    }
+    <button class="btn btn-outline-success" type="submit">Проверить</button>
+</form>
+
+<p>Если сообщение не пришло в течении пары минут ввдетите данные ещё раз</p>
+<form action="@Url.Action(nameof(OrderController.SendConfirmation),"Order")" method="post">
+    <label for="email">Почта</label>
+    <input class="form-control" name="email" type="text" placeholder="example@mail.ru" />
+    @if (Model.Errors.ContainsKey("email"))
+    {
+        <small class="form-text text-danger">@Model.Errors["email"]</small>
+    }
+    <label for="cellPhone">Телефон</label>
+    <input class="form-control" name="cellPhone" type="text" placeholder="+79998887654" />
+    @if (Model.Errors.ContainsKey("cellPhone"))
+    {
+        <small class="form-text text-danger">@Model.Errors["cellPhone"]</small>
+    }
+    <button class="btn btn-outline-success">Повторно отправить код</button>
+</form>

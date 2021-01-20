@@ -1,0 +1,27 @@
+﻿.minus {
+    cursor: pointer;
+    width: 25%;
+    height: 100%;
+    float: left;
+}
+
+.plus {
+    cursor: pointer;
+    width: 25%;
+    height: 100%;
+    float: right;
+}
+
+.inp_price {
+    width: 50%;
+    height: 100%;
+    border: none;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+
+.count_box {
+    width: 100%;
+    height: 100%;
+    border: 1px solid gray;
+}

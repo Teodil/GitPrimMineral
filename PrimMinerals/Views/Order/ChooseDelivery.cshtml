@@ -1,0 +1,85 @@
+﻿@model ChooseDeliveryModel
+@{
+    ViewData["Title"] = "Способ доставки";
+}
+
+
+<h1>Способ доставки</h1>
+<input id="waight" type="hidden" name="waight" value="@Model.Order.TotalWaight" />
+<form>
+    <div class="form-group">
+        <select id="select" name="select" class="form-control">
+            @foreach (var delivery in Model.Delivers)
+            {
+                <option value="@delivery.Id">@delivery.Tittle</option>
+            }
+        </select>
+    </div>
+</form>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+
+    //Событие вызывается при изменении значения select
+    $('select[name="select"]').on('change', function () {
+
+
+        var selected = $("#select option:selected").val();
+
+
+        var code1 = "<input type=\"hidden\" name=\"deliveryId\" value=" + selected + " />" +
+            "<input type = \"hidden\" name = \"deliveryPrice\" value = \"0\" />" +
+            "<input type=\"hidden\" name=\"CityTo\" value=\"нет\" />" +
+            "<input type=\"hidden\" name=\"StreetTo\" value=\"нет\" />" +
+            "<input type=\"hidden\" name=\"HouseTo\" value=\"нет\" />" +
+            "<input type=\"hidden\" name=\"FlatTo\" value=\"нет\" />" +
+            "<input type=\"hidden\" name=\"IndexTo\" value=\"нет\" />" +
+            "<button class=\"btn btn-outline-success\"  type=\"submit\">Далее</button>";
+
+        var code2 = "<input type=\"hidden\" name=\"deliveryId\" value=" + selected + " />" +
+            "<input type = \"hidden\" name = \"deliveryPrice\" value = \"250\" />" +
+            "<input type=\"hidden\" name=\"CityTo\" value=\"Владивосток\" />" +
+            "<label for=\"StreetTo\">Улица</label>"+
+            "<input class=\"form-control\" type=\"text\" name=\"StreetTo\" />" +
+            "<label for=\"HouseTo\">Дом</label>" +
+            "<input class=\"form-control\" type=\"text\" name=\"HouseTo\"  />" +
+            "<label for=\"FlatTo\">Квартира</label>" +
+            "<input class=\"form-control\" type=\"text\" name=\"FlatTo\"  />" +
+            "<input type=\"hidden\" name=\"IndexTo\" value=\"нет\" />" +
+            "<label class=\"form-text\" for=\"FlatTo\">Цена: 250&#8381;</label>" +
+            "<button class=\"btn btn-outline-success\"  type=\"submit\">Далее</button>";
+
+        var code31 = "<input type=\"hidden\" name=\"deliveryId\" value=" + selected + " />" +
+            "<label for=\"CityTo\">Город</label>" +
+            "<input class=\"form-control\" type=\"text\" name=\"CityTo\" />" +
+            "<label for=\"StreetTo\">Улица</label>" +
+            "<input class=\"form-control\" type=\"text\" name=\"StreetTo\" />" +
+            "<label for=\"HouseTo\">Дом</label>" +
+            "<input class=\"form-control\" type=\"text\" name=\"HouseTo\"  />" +
+            "<label for=\"FlatTo\">Квартира</label>" +
+            "<input class=\"form-control\" type=\"text\" name=\"FlatTo\"  />" +
+            "<label for=\"IndexTo\">Почтовый индекс</label>" +
+            "<input class=\"form-control\" type=\"text\" name=\"IndexTo\" />" +
+            "<label for=\"deliveryPrice\">Цена</label>" +
+            "<input class=\"form-control\" type = \"text\" readonly name = \"deliveryPrice\" value = \"250\" />" +
+            "<button class=\"btn btn-outline-success\"  type=\"submit\">Далее</button>";
+
+        //Берём номер кода
+        //var count = $(this).val();
+        //Записываем внутрь блока стирая старые "внутренности"
+        if (selected == 1) {
+            $(function () {
+                $("#result").html(code1);
+            });
+        }
+        if (selected == 2) {
+            $("#result").html(code2);
+        }
+        if (selected == 3) {
+            $("#result").html(code31);
+        }
+    });
+</script>
+<form id="result" class="form-group"  action="@Url.Action("SetDelivery","Order")" method="post">
+
+</form>

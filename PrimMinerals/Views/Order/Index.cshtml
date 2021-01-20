@@ -44,7 +44,7 @@
 
                 <td class="text-center align-middle">@Model.Items[i].Price&#8381;</td>
                 <td class="text-center align-middle">
-                    <form class="form-inline" action="@Url.Action("RemoveItem","Order",new {productId=Model.Items[i].ProductId, redirectPage=Context.Request.Path, count=int.MaxValue })" method="post">
+                    <form class="form-inline" action="@Url.Action("RemoveItem","Order",new {productId=Model.Items[i].ProductId, redirectPage="/Order/Index", count=int.MaxValue })" method="post">
                         <input type="hidden" name="productId" value="@Model.Items[i].ProductId" />
                         <button class="btn btn-danger" type="submit">Удалить</button>
                     </form>

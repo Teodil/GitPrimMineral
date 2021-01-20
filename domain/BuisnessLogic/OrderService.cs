@@ -64,11 +64,11 @@ namespace BuisnessLogic
         internal void AddOrUpdateProduct(Order order, int productId, int count)
         {
             var product = productRepository.GetById(productId);
-            if (product.Count > count)
+            if (product.Count >= count)
             {
                 if (order.TryGetItem(productId, out OrderItem orderItem))
                 {
-                    if(product.Count > orderItem.Count)
+                    if(product.Count >= (orderItem.Count+count))
                     {
                         orderItem.Count += count;
 

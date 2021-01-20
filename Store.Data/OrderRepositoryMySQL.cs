@@ -11,6 +11,7 @@ namespace Store.Data
     public class OrderRepositoryMySQL : IOrderRepository, IOrderRepositoryAdmin
     {
         private readonly List<Order> orders = new List<Order>();
+        private readonly List<Order> ordersAdmin = new List<Order>();
         private MySqlConnection connection = new MySqlConnection("Server=localhost;Port=3307;Database=mydb;Uid=root;Pwd=123456yt;");
         MySqlCommand command;
         MySqlDataReader dataReader;
@@ -99,8 +100,11 @@ namespace Store.Data
 
         public Order[] GetFullOrdersInfo()
         {
+            ordersAdmin.Clear();
+
             connection.Close();
             connection.Open();
+
 
             command = connection.CreateCommand();
             List<Order> orders = new List<Order>();
@@ -170,6 +174,8 @@ namespace Store.Data
 
             connection.Close();
 
+            ordersAdmin.AddRange(orders);
+
             return orders.ToArray();
 
         }
@@ -191,6 +197,67 @@ namespace Store.Data
             command.ExecuteNonQuery();
 
             connection.Close();
+        }
+
+        public Order GetFullOrderInfoById(int orderId)
+        {
+            return ordersAdmin.Single(order => order.Id == orderId);
+        }
+
+        public void RemoveItem(int orderId, int productId, int count)
+        {
+            connection.Close();
+            connection.Open();
+
+            command = connection.CreateCommand();
+            command.CommandText = $"SELECT count FROM orderproduct where Product_Id={productId} AND Order_id={orderId}";
+
+            int productCount = (int)command.ExecuteScalar();
+
+            if (productCount < count)
+            {
+                command.CommandText = $"DELETE FROM orderproduct where Product_Id={productId} AND Order_id={orderId}";
+                command.ExecuteNonQuery();
+            }
+            else
+            {
+                command.CommandText = $"UPDATE orderproduct SET count=count-{count} where Product_Id={productId} AND Order_id={orderId}";
+                command.ExecuteNonQuery();
+            }
+
+            connection.Close();
+
+            GetFullOrdersInfo();
+
+        }
+
+        public void AddItem(int orderId, int productId, int count)
+        {
+            connection.Close();
+            connection.Open();
+
+            command = connection.CreateCommand();
+            command.CommandText = $"SELECT count FROM product where Id={productId}";
+
+            int productCount = (int)command.ExecuteScalar();
+
+            command = connection.CreateCommand();
+            command.CommandText = $"SELECT count FROM orderproduct WHERE Product_Id={productId} AND Order_id={orderId}";
+
+            int CurrentCountInOrder = (int)command.ExecuteScalar();
+
+            if (productCount > count)
+            {
+                if(productCount>= (CurrentCountInOrder + count))
+                {
+                    command.CommandText = $"UPDATE orderproduct SET count=count+{count} where Product_Id={productId} AND Order_id={orderId}";
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            connection.Close();
+
+            GetFullOrdersInfo();
         }
     }
 }

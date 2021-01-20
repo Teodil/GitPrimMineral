@@ -252,10 +252,20 @@ namespace PrimMinerals.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Orders()
         {
+            var orders = orderRepository.GetFullOrdersInfo();
+
+            return View(orders);
+        }
+
+
+        [HttpPost]
+        public IActionResult OrderUpdate()
+        {
             var order = orderRepository.GetFullOrdersInfo();
 
             return View(order);
         }
+
 
         [HttpPost]
         public IActionResult DeleteOrder(int orderId,string redirectUrl)
@@ -263,6 +273,29 @@ namespace PrimMinerals.Areas.Admin.Controllers
             orderRepository.DeleteOrder(orderId);
 
             return RedirectPreserveMethod(redirectUrl);
+        }
+
+
+        [HttpPost]
+        public IActionResult AddItem(int orderId, int productId, string redirectUrl, int count)
+        {
+            orderRepository.AddItem(orderId, productId, count);
+            return RedirectPreserveMethod(redirectUrl);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveItem(int orderId, int productId, string redirectUrl, int count)
+        {
+            orderRepository.RemoveItem(orderId,productId,count);
+
+            return RedirectPreserveMethod(redirectUrl);
+        }
+
+        [HttpPost]
+        public IActionResult OrderPage(int orderId)
+        {
+            var order = orderRepository.GetFullOrderInfoById(orderId);
+            return View(order);
         }
 
         [HttpPost]

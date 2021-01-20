@@ -104,7 +104,7 @@ namespace PrimMinerals.Controllers
 
             if(payment.Id == 2)
             {
-                return Redirect($"/YandexKassa?orderId={order.Id}&price={order.TotalPrice}");
+                return Redirect($"/YandexKassa?orderId={order.Id}&price={order.TotalPrice+order.Delivery.Price}");
             }
 
             return RedirectToAction("Finish", "Order", new { orderId=order.Id}); ;

@@ -120,16 +120,23 @@ namespace BuisnessLogic
             var order = GetOrder();
             order.Errors.Clear();
 
-            if (CheckEmail(email))
+            if (!string.IsNullOrEmpty(cellPhone))
             {
-                var confirmationCode = new Random().Next(1000,9999);
-                order.CellPhone = cellPhone;
-                order.Email = email;
-                Session.SetInt32(email, confirmationCode);
-                messageService.SendCode(confirmationCode, email);
+                if (CheckEmail(email))
+                {
+                    var confirmationCode = new Random().Next(1000, 9999);
+                    order.CellPhone = cellPhone;
+                    order.Email = email;
+                    Session.SetInt32(email, confirmationCode);
+                    messageService.SendCode(confirmationCode, email);
+                }
+                else
+                    order.Errors["email"] = "Неверно указана почта";
             }
             else
-                order.Errors["email"] = "Неверно указана почта";
+            {
+                order.Errors["email"] = "Неверно указан телефон";
+            }
 
             return order;
         }

@@ -183,6 +183,7 @@ namespace Store.Data
 
         public Product[] GetFavoutrite()
         {
+            connection.Close();
             connection.Open();
             List<Product> products = new List<Product>();
             command = connection.CreateCommand();

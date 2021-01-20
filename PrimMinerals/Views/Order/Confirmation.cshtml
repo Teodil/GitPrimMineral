@@ -17,7 +17,7 @@
     <button class="btn btn-outline-success" type="submit">Проверить</button>
 </form>
 
-<p>Если сообщение не пришло в течении пары минут ввдетите данные ещё раз</p>
+<p>Если сообщение не пришло в течении пары минут введите данные ещё раз</p>
 <form action="@Url.Action(nameof(OrderController.SendConfirmation),"Order")" method="post">
     <label for="email">Почта</label>
     <input class="form-control" name="email" type="text" placeholder="example@mail.ru" />

@@ -65,20 +65,8 @@
 
     <div class="container mb-5">
         <div class="row">
-            <div class="col-2">
-                <div class="container bg-white border-bottom box-shadow mb-3 align-self-start">
-                    @for (int i = 0; i < 5; i++)
-                    {
-                        <div class="row w-100 h-auto text-center">
-                            <div class="col-md-auto text-center">
-                                Категория @(i+1);
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
             <div class="col">
-                <main role="main" class="container-fluid" >
+                <main role="main" class="container-fluid mb-4" >
                     @RenderBody()
                 </main>
             </div>

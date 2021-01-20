@@ -54,9 +54,19 @@
             </div>
         </form>
         <div class="row w-100">
-            <h4 class="row text-left w-100 ml-2">Описание</h4>
-            <div class="row text-left ml-2">
-                @Model.Description
+            <div class="container">
+                <h4 class="row text-left w-100 ml-2">Описание</h4>
+                <div class="row text-left ml-2">
+                    <h6>Размер: @Model.Size</h6>
+                </div>
+
+                <div class="row text-left ml-2">
+                    <h6>Вес: @Model.Waight кг</h6>
+                </div>
+
+                <div class="row text-left ml-2">
+                    @Model.Description
+                </div>
             </div>
         </div>
     </div>

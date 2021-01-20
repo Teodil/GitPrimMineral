@@ -36,17 +36,43 @@
 <div class="row">
 <h2>Информация по заказу</h2>
 </div>
-<div class="row">
+<div class="row mb-2">
     <form class="form-group">
         <h3>Контактная информация</h3>
         <label class="form-text">Телефон</label>
         <input class="form-control" type="tel" name="cellPhone" value="@Model.CellPhone" />
-        
+
         <label class="form-text">Электронная почта</label>
         <input class="form-control" type="email" name="email" value="@Model.Email" />
-        
+
         <h3>Информация по доставке</h3>
         <label class="form-text">Тип доставки</label>
         <input class="form-control" type="text" name="deliveryTittle" value="@{ if (Model.Delivery != null) { @Model.Delivery.Tittle; } }" />
+
+        <label class="form-text">Город</label>
+        <input class="form-control" type="text" name="CityTo" value="@{ if (Model.Delivery != null) { @Model.Delivery.CityTo; } }" />
+
+        <label class="form-text">Улица</label>
+        <input class="form-control" type="text" name="StreetTo" value="@{ if (Model.Delivery != null) { @Model.Delivery.StreetTo; } }" />
+
+        <label class="form-text">Дом</label>
+        <input class="form-control" type="text" name="HouseTo" value="@{ if (Model.Delivery != null) { @Model.Delivery.HouseTo; } }" />
+
+        <label class="form-text">Квартира</label>
+        <input class="form-control" type="text" name="FlatTo" value="@{ if (Model.Delivery != null) { @Model.Delivery.FlatTo; } }" />
+
+        <label class="form-text">Индекс</label>
+        <input class="form-control" type="text" name="IndexTo" value="@{ if (Model.Delivery != null) { @Model.Delivery.IndexTo; } }" />
+
+        <label class="form-text">Цена</label>
+        <input class="form-control" type="text" name="deliveryPrice" value="@{ if (Model.Delivery != null) { @Model.Delivery.Price; } }" />
+
+        <h3>Информация по оплате</h3>
+        <label class="form-text">Цена</label>
+        <input class="form-control" type="text" name="deliveryPrice" value="@Model.TotalPrice" />
+
+
+        <label class="form-text">Тип оплаты</label>
+        <input class="form-control" type="text" name="deliveryPrice" value="@{ if (Model.Payment != null) { @Model.Payment.Tittle; } }" />
     </form>
 </div>
